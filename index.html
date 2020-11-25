@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<head>
+
+</head>
+<body>
+  <input type="button" id="enable_audio_button" value="Begin">
+  <input id="crossfade_slider" type="range" min="0" max="1" step="0.01" disabled>
+
+	<script src='./js/Tone.js'></script>
+  <script type="module">
+    import { WebAudioSession } from './js/web-audio-session.js'
+
+    let audioAssets = [
+      "./sounds/speck_-_It_Takes_Perspective_1.mp3",
+      "./sounds/Reiswerk_-_Zona_Norte.mp3"
+    ]
+    
+    // set up what happens when user interacts with slider
+    document.getElementById("crossfade_slider").addEventListener('input', (event) => {
+      console.log(event)
+      const value = event.target.value
+      WebAudioSession.updateFaderValue(value)
+    })
+
+    // set up what happens when user interacts with button
+    document.getElementById("enable_audio_button").addEventListener('click', (event) => {
+      console.log(event)
+      WebAudioSession
+        .enable(audioAssets)
+        .then( () => {
+          document.getElementById("crossfade_slider").removeAttribute('disabled')
+        })
+    })
+  </script>
+</body>
+
+<style>
+  input {
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+</style>
