@@ -8,15 +8,15 @@ X prepares for playback
 */
 
 var WebAudioSession = {
-  players: {},
-  fader: null,
+  players: {}, // sample buffers to hold each track
+  fader: null, // crossfader
 
   enable: async function(audioAssets){
     try {
       await Tone.start()
     } catch (error){
       return error
-    }
+    } // most errors here are the result of mobile browsers trying to prevent 'autoplaying' audio which is usually annoying to users
 
     audioAssets.forEach( (audioAsset, index) => {
       this.players[index] = new Tone.Player(audioAsset);
@@ -40,7 +40,7 @@ var WebAudioSession = {
   },
 
   updateFaderValue: function(value /* between 0 and 1*/){
-    this.fader.fade.value = value
+    this.fader.fade.value = value // set the value of the crossfader to the user-set value of the slider
   }
 }
 
