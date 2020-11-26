@@ -3,8 +3,11 @@ CohortWebAudioSession
 X takes a list of assets (sound files)
 X loads them
 X prepares for playback
-
-- take cuelist with cueContent field, loop field
+- verify slider matches fader
+- 'enable' needs to be once only
+- iOS is janky -- load time?
+- check Tone.Players to see if it's more useful?
+- take cuelist with cueContent field, loop / loop start / loop end fields
 */
 
 var WebAudioSession = {
