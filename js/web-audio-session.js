@@ -24,8 +24,7 @@ var WebAudioSession = {
     audioAssets.forEach( (audioAsset, index) => {
       this.players.set("" + index, new Tone.Player(audioAsset))
     })
-
-    console.log(this.players)
+    
     console.log('audio session started')
 
     Tone.loaded().then(() => {
@@ -49,7 +48,6 @@ var WebAudioSession = {
 
   stopAll: function(){
     this.players.forEach( player => {
-      console.log(player)
       player.stop()
     })
   }
