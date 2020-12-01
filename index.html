@@ -1,5 +1,7 @@
 <!DOCTYPE html>
+
 <html lang="en"></html>
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -19,6 +21,7 @@
             <img src="https://www.crowstheatre.com/images/logo-alt.png"  height="40px" alt="Crow's theatre logo" > 
         </div> 
     </div>
+
 
     <div class="row"> 
         <div class="col-sm-offset-2 col-sm-10">
@@ -52,33 +55,83 @@
         </div>    
     </div>
   </div>
+
   <!-- audio engine! docs: https://tonejs.github.io -->
   <script src='./js/Tone.js'></script>
   
   <script type="module">
     import { WebAudioSession } from './js/web-audio-session.js'
 
-    let audioAssets = [
-      "./sounds/speck_-_It_Takes_Perspective_1.mp3",
-      "./sounds/Wonderland_Window-Place.mp3"
+
+    // to avoid weird uses of the word 'cue', let's say we have four episodes. each has the same ambient sound cue and each has a different, second sound cue
+
+    // check the URL to see which episode we should be playing
+    const queryParams = new URLSearchParams(document.location.search) // in the URL, this is everything after a question mark, i.e. "https://google.com/stuff?user=Bob" should return the object { user: "Bob" }
+
+    let activeEpisode
+    if(!queryParams || !queryParams.get('episode')){ 
+      activeEpisode = 1 // in case of trouble, default to episode 1
+    } else {
+      activeEpisode = queryParams.get('episode')
+    }
+
+    console.log("Episode: " + activeEpisode)
+
+    // define episodes and their audio files
+    let episodes = [
+      {
+        episodeLabel: "Episode 1",
+        audioAssets:[
+          "./sounds/speck_-_It_Takes_Perspective_1.mp3",
+          "./sounds/Wonderland_Window-Place.mp3"
+        ]
+      },{
+        episodeLabel: "Episode 2",
+        audioAssets:[
+          "./sounds/speck_-_It_Takes_Perspective_1.mp3",
+          "./sounds/Wonderland_Window-Place.mp3"
+        ]
+      },{
+        episodeLabel: "Episode 3",
+        audioAssets:[
+          "./sounds/Reiswerk_-_Zona_Norte.mp3",
+          "./sounds/Wonderland_Window-Place.mp3"
+        ]
+      },{
+        episodeLabel: "Episode 4",
+        audioAssets:[
+          "./sounds/speck_-_It_Takes_Perspective_1.mp3",
+          "./sounds/Wonderland_Window-Place.mp3"
+        ]
+      }
+
     ]
     
     // set up what happens when user interacts with slider
     document.getElementById("crossfade_slider").addEventListener('input', (event) => {
-      console.log(event)
+      // console.log(event)
       const value = event.target.value
       WebAudioSession.updateFaderValue(value)
     })
 
-    // set up what happens when user interacts with button
+    // set up what happens when user interacts with Begin button
     document.getElementById("enable_audio_button").addEventListener('click', (event) => {
-      console.log(event)
+      document.getElementById("enable_audio_button").setAttribute('disabled', " ")
+      // console.log(event)
       WebAudioSession
-        .enable(audioAssets) // pass the list of audio files, in this case only two
+        .enable(episodes[activeEpisode].audioAssets) // pass the list of audio files, in this case only two
         .then( () => {
-          document.getElementById("crossfade_slider").removeAttribute('disabled')
+          document.getElementById("crossfade_slider").removeAttribute('disabled') // enable the slider
+          document.getElementById("enable_audio_button").remove() // delete the Begin button
+          document.getElementById("stop_button").classList.remove('hidden')
         })
     })
+
+    // set up the Stop button
+    document.getElementById("stop_button").addEventListener( 'click', event => {
+      WebAudioSession.stopAll()
+    })
+
   </script>
 </body>
 
@@ -88,4 +141,10 @@
     margin-top: 20px;
     margin-bottom: 20px;
   }
+
+
+  .hidden {
+    visibility: hidden;
+  }
+
 </style>
