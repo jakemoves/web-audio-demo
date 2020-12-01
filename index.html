@@ -16,9 +16,47 @@
   <script type="module">
     import { WebAudioSession } from './js/web-audio-session.js'
 
-    let audioAssets = [
-      "./sounds/speck_-_It_Takes_Perspective_1.mp3",
-      "./sounds/Wonderland_Window-Place.mp3"
+    // to avoid weird uses of the word 'cue', let's say we have four episodes. each has the same ambient sound cue and each has a different, second sound cue
+
+    // check the URL to see which episode we should be playing
+    const queryParams = new URLSearchParams(document.location.search) // in the URL, this is everything after a question mark, i.e. "https://google.com/stuff?user=Bob" should return the object { user: "Bob" }
+
+    let activeEpisode
+    if(!queryParams || !queryParams.get('episode')){ 
+      activeEpisode = 1 // in case of trouble, default to episode 1
+    } else {
+      activeEpisode = queryParams.get('episode')
+    }
+
+    console.log(activeEpisode)
+
+    // define episodes and their audio files
+    let episodes = [
+      {
+        episodeLabel: "Episode 1",
+        audioAssets:[
+          "./sounds/speck_-_It_Takes_Perspective_1.mp3",
+          "./sounds/Wonderland_Window-Place.mp3"
+        ]
+      },{
+        episodeLabel: "Episode 2",
+        audioAssets:[
+          "./sounds/speck_-_It_Takes_Perspective_1.mp3",
+          "./sounds/Wonderland_Window-Place.mp3"
+        ]
+      },{
+        episodeLabel: "Episode 3",
+        audioAssets:[
+          "./sounds/Reiswerk_-_Zona_Norte.mp3",
+          "./sounds/Wonderland_Window-Place.mp3"
+        ]
+      },{
+        episodeLabel: "Episode 4",
+        audioAssets:[
+          "./sounds/speck_-_It_Takes_Perspective_1.mp3",
+          "./sounds/Wonderland_Window-Place.mp3"
+        ]
+      }
     ]
     
     // set up what happens when user interacts with slider
@@ -30,11 +68,13 @@
 
     // set up what happens when user interacts with button
     document.getElementById("enable_audio_button").addEventListener('click', (event) => {
+      document.getElementById("enable_audio_button").setAttribute('disabled', " ")
       console.log(event)
       WebAudioSession
-        .enable(audioAssets) // pass the list of audio files, in this case only two
+        .enable(episodes[activeEpisode].audioAssets) // pass the list of audio files, in this case only two
         .then( () => {
           document.getElementById("crossfade_slider").removeAttribute('disabled')
+          document.getElementById("enable_audio_button").remove()
         })
     })
   </script>

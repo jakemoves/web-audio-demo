@@ -44,7 +44,13 @@ var WebAudioSession = {
 
   updateFaderValue: function(value /* between 0 and 1*/){
     this.fader.fade.value = value // set the value of the crossfader to the user-set value of the slider
-  }
+  },
+
+  // pauseAll: function(){
+  //   this.players.forEach( player => {
+  //     player.pause()
+  //   })
+  // }
 }
 
 export { WebAudioSession }
