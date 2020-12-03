@@ -3,6 +3,8 @@ CohortWebAudioSession
 X takes a list of assets (sound files)
 X loads them
 X prepares for playback
+X emits 'started' event
+- emits 'loaded' event
 - verify slider matches fader
 - 'enable' needs to be once only
 - iOS is janky -- load time?
@@ -21,13 +23,15 @@ var WebAudioSession = {
       return error
     } // most errors here are the result of mobile browsers trying to prevent 'autoplaying' audio which is usually annoying to users
 
+    this.trigger('started')
+    console.log('audio session started 1')
+
     audioAssets.forEach( (audioAsset, index) => {
       this.players.set("" + index, new Tone.Player(audioAsset))
     })
-    
-    console.log('audio session started')
 
     Tone.loaded().then(() => {
+      this.trigger('loaded')
       console.log('loading complete')
       // setting up crossfade
       if(this.players.size == 2){ // make sure there's only two samples / tracks
