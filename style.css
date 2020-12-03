@@ -29,4 +29,8 @@ h1 {
 }
 hr {
     background-color: #dee1e5;
+} 
+
+.hidden {
+  visibility: hidden;
 }
