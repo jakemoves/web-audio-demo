@@ -29,7 +29,12 @@ var WebAudioSession = {
     console.log('audio session started')
 
     audioAssets.forEach( (audioAsset, index) => {
-      this.players.set("" + index, new Tone.Player(audioAsset))
+      let player = new Tone.Player(audioAsset)
+      if(index == 0){
+        // it's the ambient file (first in asset list), loop that bad boy
+        player.loop = true
+      }
+      this.players.set("" + index, player)
     })
 
     Tone.loaded().then(() => {
