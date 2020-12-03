@@ -36,6 +36,9 @@
       <div class="col-sm-offset-2 col-sm-10 mb-4">
           <!-- best practice for mobile web audio: have the user click a button to begin rather than attempt to autoplay sound -->
           <input class="btn btn-outline-light btn-lg font-weight-bold" type="button" id="enable_audio_button" value="Begin">
+
+          <p id="loading_indicator" class="hidden">Loading...</p>
+
           <!-- Stop button is hidden on page load -->
           <input class="btn btn-outline-light btn-lg font-weight-bold" type="button" id="stop_button" value="Stop" class="hidden">
       </div>
@@ -57,9 +60,22 @@
 
   <!-- audio engine! docs: https://tonejs.github.io -->
   <script src='./js/Tone.js'></script>
+
+  <script src="./js/microevent.js"></script>
   
   <script type="module">
     import { WebAudioSession } from './js/web-audio-session.js'
+
+    MicroEvent.mixin(WebAudioSession)
+
+    WebAudioSession.bind('started', () => {
+      // fires when audio session has started
+    })
+
+    WebAudioSession.bind('loaded', () => {
+      // fires when all files are finished loading
+      document.getElementById("loading_indicator").classList.add('hidden')
+    })
 
     // to avoid weird uses of the word 'cue', let's say we have four episodes. each has the same ambient sound cue and each has a different, second sound cue
 
@@ -119,6 +135,8 @@
     document.getElementById("enable_audio_button").addEventListener('click', (event) => {
       
       document.getElementById("enable_audio_button").setAttribute('disabled', " ") // button will not accept further presses
+
+      document.getElementById("loading_indicator").classList.remove('hidden')
 
       // get the audio assets for the active episode
       let activeAssets = episodes.find( episode => episode.episodeNumber == activeEpisode).audioAssets 
