@@ -59,6 +59,9 @@
     </div>
   </div>
 
+  <!-- Resume button is hidden on page load -->
+  <input type="button" id="resume_button" value="Resume" class="hidden">
+
   <!-- audio engine! docs: https://tonejs.github.io -->
   <script src='./js/Tone.js'></script>
 
@@ -76,6 +79,18 @@
     WebAudioSession.bind('loaded', () => {
       // fires when all files are finished loading
       document.getElementById("loading_indicator").classList.add('hidden')
+    })
+
+    WebAudioSession.bind('playing', () => {
+      // fires when audio start playing
+      document.getElementById("resume_button").classList.add('hidden') // hide the Resume button - NB it may already be hidden in which case this line should do nothing
+      document.getElementById("stop_button").classList.remove('hidden') // show the Stop button
+    })
+
+    WebAudioSession.bind('stopped', () => {
+      // fires when audio stops playing
+      document.getElementById("stop_button").classList.add('hidden') // hide the Stop button
+      document.getElementById("resume_button").classList.remove('hidden') // show the Resume button
     })
 
     // to avoid weird uses of the word 'cue', let's say we have four episodes. each has the same ambient sound cue and each has a different, second sound cue
@@ -152,7 +167,6 @@
         .then( () => {
           document.getElementById("crossfade_slider").removeAttribute('disabled') // enable the slider
           document.getElementById("enable_audio_button").remove() // delete the Begin button
-          document.getElementById("stop_button").classList.remove('hidden') // show the Stop button
         })
         .catch(error => {
           // something went wrong, restore the button to a pressable state
@@ -164,6 +178,11 @@
     // set up the Stop button
     document.getElementById("stop_button").addEventListener( 'click', event => {
       WebAudioSession.stopAll()
+    })
+
+    // set up the Resume button
+    document.getElementById("resume_button").addEventListener( 'click', event => {
+      WebAudioSession.startAll()
     })
 
   </script>

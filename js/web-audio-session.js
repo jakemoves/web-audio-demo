@@ -4,7 +4,9 @@ X takes a list of assets (sound files)
 X loads them
 X prepares for playback
 X emits 'started' event
-- emits 'loaded' event
+X emits 'loaded' event
+X emits 'playing' and 'stopped' events
+
 - verify slider matches fader
 - 'enable' needs to be once only
 - iOS is janky -- load time?
@@ -24,7 +26,7 @@ var WebAudioSession = {
     } // most errors here are the result of mobile browsers trying to prevent 'autoplaying' audio which is usually annoying to users
 
     this.trigger('started')
-    console.log('audio session started 1')
+    console.log('audio session started')
 
     audioAssets.forEach( (audioAsset, index) => {
       this.players.set("" + index, new Tone.Player(audioAsset))
@@ -40,6 +42,7 @@ var WebAudioSession = {
         const ambient = this.players.get("0").connect(this.fader.a).start()
         const cue = this.players.get("1").connect(this.fader.b).start()
         this.fader.fade.value = 0.5
+        this.trigger('playing')
       } else {
         console.log("Error -- this patch setup needs exactly two files passed in")
       }
@@ -54,6 +57,14 @@ var WebAudioSession = {
     this.players.forEach( player => {
       player.stop()
     })
+    this.trigger('stopped')
+  },
+
+  startAll: function(){
+    this.players.forEach( player => {
+      player.start()
+    })
+    this.trigger('playing')
   }
 }
 
