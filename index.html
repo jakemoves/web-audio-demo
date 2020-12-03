@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-
-<html lang="en"></html>
-
+<html lang="en">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -17,11 +15,10 @@
 <body>
   <div class="container">
     <div class="row" >  
-        <div class="col-sm-offset-2 col-sm-10 mt-4">  
-            <img src="https://www.crowstheatre.com/images/logo-alt.png"  height="40px" alt="Crow's theatre logo" > 
-        </div> 
+      <div class="col-sm-offset-2 col-sm-10 mt-4">  
+        <img src="https://www.crowstheatre.com/images/logo-alt.png" height="40px" alt="Crow's theatre logo"> 
+      </div>
     </div>
-
 
     <div class="row"> 
         <div class="col-sm-offset-2 col-sm-10">
@@ -36,25 +33,25 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-offset-2 col-sm-10 mb-4">
-            <!-- best practice for mobile web audio: have the user click a button to begin rather than attempt to autoplay sound -->
-            <input class="btn btn-outline-light btn-lg font-weight-bold" type="button" id="enable_audio_button" value="Begin">
-            <!-- Stop button is hidden on page load -->
-            <input class="btn btn-outline-light btn-lg font-weight-bold"type="button" id="stop_button" value="Stop" class="hidden">
-        </div>
+      <div class="col-sm-offset-2 col-sm-10 mb-4">
+          <!-- best practice for mobile web audio: have the user click a button to begin rather than attempt to autoplay sound -->
+          <input class="btn btn-outline-light btn-lg font-weight-bold" type="button" id="enable_audio_button" value="Begin">
+          <!-- Stop button is hidden on page load -->
+          <input class="btn btn-outline-light btn-lg font-weight-bold"type="button" id="stop_button" value="Stop" class="hidden">
+      </div>
     </div>
     
     <div class="row">
-        <div class="col-sm-offset-2 col-sm-10">
-          <form>
-            <div class="form-group">
-              <label for="crossfade_slider" class="float-left h4">Ambience</label> 
-              <label for="" class="float-right h4">Music</label>
-              <!-- slider ("range input") is disabled on page load -->
-              <input  class="form-control-range" id="crossfade_slider" type="range" min="0" max="1" step="0.01" disabled>
-            </div>
-          </form>
-        </div>    
+      <div class="col-sm-offset-2 col-sm-10">
+        <form>
+          <div class="form-group">
+            <label for="crossfade_slider" class="float-left h4">Ambience</label> 
+            <label for="" class="float-right h4">Music</label>
+            <!-- slider ("range input") is disabled on page load -->
+            <input  class="form-control-range" id="crossfade_slider" type="range" min="0" max="1" step="0.01" disabled>
+          </div>
+        </form>
+      </div>    
     </div>
   </div>
 
@@ -63,7 +60,6 @@
   
   <script type="module">
     import { WebAudioSession } from './js/web-audio-session.js'
-
 
     // to avoid weird uses of the word 'cue', let's say we have four episodes. each has the same ambient sound cue and each has a different, second sound cue
 
@@ -74,7 +70,7 @@
     if(!queryParams || !queryParams.get('episode')){ 
       activeEpisode = 1 // in case of trouble, default to episode 1
     } else {
-      activeEpisode = queryParams.get('episode')
+      activeEpisode = parseInt(queryParams.get('episode'))
     }
 
     console.log("Episode: " + activeEpisode)
@@ -82,31 +78,34 @@
     // define episodes and their audio files
     let episodes = [
       {
+        episodeNumber: 1,
         episodeLabel: "Episode 1",
         audioAssets:[
           "./sounds/HC-Winter-Amb-1Test-short1.mp3",
           "./sounds/Wonderland-Scene1-2.0M-Winter.mp3"
         ]
       },{
+        episodeNumber: 2,
         episodeLabel: "Episode 2",
         audioAssets:[
           "./sounds/HC-Winter-Amb-1Test-short.mp3",
           "./sounds/Wonderland_Window-Place.mp3"
         ]
       },{
+        episodeNumber: 3,
         episodeLabel: "Episode 3",
         audioAssets:[
           "./sounds/HC-Winter-Amb-1Test-short.mp3",
           "./sounds/Wonderland-Scene3-2.5MThePlace.mp3"
         ]
       },{
+        episodeNumber: 4,
         episodeLabel: "Episode 4",
         audioAssets:[
           "./sounds/HC-Winter-Amb-1Test-short.mp3",
           "./sounds/Wonderland-Scene4-2M-Spring.mp3"
         ]
       }
-
     ]
     
     // set up what happens when user interacts with slider
@@ -118,14 +117,23 @@
 
     // set up what happens when user interacts with Begin button
     document.getElementById("enable_audio_button").addEventListener('click', (event) => {
-      document.getElementById("enable_audio_button").setAttribute('disabled', " ")
-      // console.log(event)
+      
+      document.getElementById("enable_audio_button").setAttribute('disabled', " ") // button will not accept further presses
+
+      // get the audio assets for the active episode
+      let activeAssets = episodes.find( episode => episode.episodeNumber == activeEpisode).audioAssets 
+
       WebAudioSession
-        .enable(episodes[activeEpisode].audioAssets) // pass the list of audio files, in this case only two
+        .enable(activeAssets) // pass the audio assets for this episode
         .then( () => {
           document.getElementById("crossfade_slider").removeAttribute('disabled') // enable the slider
           document.getElementById("enable_audio_button").remove() // delete the Begin button
-          document.getElementById("stop_button").classList.remove('hidden')
+          document.getElementById("stop_button").classList.remove('hidden') // show the Stop button
+        })
+        .catch(error => {
+          // something went wrong, restore the button to a pressable state
+          document.getElementById("enable_audio_button").removeAttribute('disabled')
+          console.log(error)
         })
     })
 
@@ -136,7 +144,7 @@
 
   </script>
 </body>
-
+</html>
 <style>
   input {
     display: block;
@@ -144,9 +152,7 @@
     margin-bottom: 20px;
   }
 
-
   .hidden {
     visibility: hidden;
   }
-
 </style>

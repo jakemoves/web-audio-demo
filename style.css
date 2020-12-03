@@ -5,7 +5,7 @@ html {
 body {
     
 background-size: cover;
-background-image: url("corner-vertical.jpg");
+background-image: url("./images/corner-vertical.jpg");
 background-repeat: no-repeat;
 background-color: #0c1a50;
 color: #ffffff;
@@ -14,7 +14,7 @@ color: #ffffff;
 
 @media only screen and (min-width: 768px) {
 body {  background-size: cover;
-        background-image: url("corner.jpg");
+        background-image: url("./images/corner.jpg");
         background-color: #0c1a50;
     }
 }
