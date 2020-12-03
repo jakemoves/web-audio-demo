@@ -28,7 +28,7 @@
     if(!queryParams || !queryParams.get('episode')){ 
       activeEpisode = 1 // in case of trouble, default to episode 1
     } else {
-      activeEpisode = queryParams.get('episode')
+      activeEpisode = parseInt(queryParams.get('episode'))
     }
 
     console.log("Episode: " + activeEpisode)
@@ -36,24 +36,28 @@
     // define episodes and their audio files
     let episodes = [
       {
+        episodeNumber: 1,
         episodeLabel: "Episode 1",
         audioAssets:[
           "./sounds/speck_-_It_Takes_Perspective_1.mp3",
           "./sounds/Wonderland_Window-Place.mp3"
         ]
       },{
+        episodeNumber: 2,
         episodeLabel: "Episode 2",
         audioAssets:[
           "./sounds/speck_-_It_Takes_Perspective_1.mp3",
           "./sounds/Wonderland_Window-Place.mp3"
         ]
       },{
+        episodeNumber: 3,
         episodeLabel: "Episode 3",
         audioAssets:[
           "./sounds/Reiswerk_-_Zona_Norte.mp3",
           "./sounds/Wonderland_Window-Place.mp3"
         ]
       },{
+        episodeNumber: 4,
         episodeLabel: "Episode 4",
         audioAssets:[
           "./sounds/speck_-_It_Takes_Perspective_1.mp3",
@@ -71,14 +75,23 @@
 
     // set up what happens when user interacts with Begin button
     document.getElementById("enable_audio_button").addEventListener('click', (event) => {
-      document.getElementById("enable_audio_button").setAttribute('disabled', " ")
-      // console.log(event)
+      
+      document.getElementById("enable_audio_button").setAttribute('disabled', " ") // button will not accept further presses
+
+      // get the audio assets for the active episode
+      let activeAssets = episodes.find( episode => episode.episodeNumber == activeEpisode).audioAssets 
+
       WebAudioSession
-        .enable(episodes[activeEpisode].audioAssets) // pass the list of audio files, in this case only two
+        .enable(activeAssets) // pass the audio assets for this episode
         .then( () => {
           document.getElementById("crossfade_slider").removeAttribute('disabled') // enable the slider
           document.getElementById("enable_audio_button").remove() // delete the Begin button
-          document.getElementById("stop_button").classList.remove('hidden')
+          document.getElementById("stop_button").classList.remove('hidden') // show the Stop button
+        })
+        .catch(error => {
+          // something went wrong, restore the button to a pressable state
+          document.getElementById("enable_audio_button").removeAttribute('disabled')
+          console.log(error)
         })
     })
 
