@@ -36,7 +36,7 @@ hr {
 }
 input[type=range] {
     width: 100%;
-    margin: 8.5px 0;
+    margin: 8.25px 0;
     background-color: transparent;
     -webkit-appearance: none;
   }
@@ -44,15 +44,15 @@ input[type=range] {
     outline: none;
   }
   input[type=range]::-webkit-slider-runnable-track {
-    background: #fffffe;
+    background: rgba(255, 255, 254, 0.5);
     border: 1.5px solid rgba(1, 1, 1, 0);
     border-radius: 1.3px;
     width: 100%;
-    height: 0px;
+    height: 0.5px;
     cursor: pointer;
   }
   input[type=range]::-webkit-slider-thumb {
-    margin-top: -10px;
+    margin-top: -9.75px;
     width: 17px;
     height: 17px;
     background: #ffffff;
@@ -65,11 +65,11 @@ input[type=range] {
     background: #ffffff;
   }
   input[type=range]::-moz-range-track {
-    background: #fffffe;
+    background: rgba(255, 255, 254, 0.5);
     border: 1.5px solid rgba(1, 1, 1, 0);
     border-radius: 1.3px;
     width: 100%;
-    height: 0px;
+    height: 0.5px;
     cursor: pointer;
   }
   input[type=range]::-moz-range-thumb {
@@ -83,10 +83,10 @@ input[type=range] {
   input[type=range]::-ms-track {
     background: transparent;
     border-color: transparent;
-    border-width: 9.5px 0;
+    border-width: 9.25px 0;
     color: transparent;
     width: 100%;
-    height: 0px;
+    height: 0.5px;
     cursor: pointer;
   }
   input[type=range]::-ms-fill-lower {
@@ -95,7 +95,7 @@ input[type=range] {
     border-radius: 2.6px;
   }
   input[type=range]::-ms-fill-upper {
-    background: #fffffe;
+    background: rgba(255, 255, 254, 0.5);
     border: 1.5px solid rgba(1, 1, 1, 0);
     border-radius: 2.6px;
   }
@@ -110,7 +110,7 @@ input[type=range] {
     /*Needed to keep the Edge thumb centred*/
   }
   input[type=range]:focus::-ms-fill-lower {
-    background: #fffffe;
+    background: rgba(255, 255, 254, 0.5);
   }
   input[type=range]:focus::-ms-fill-upper {
     background: #ffffff;
