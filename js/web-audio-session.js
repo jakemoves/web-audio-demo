@@ -14,6 +14,8 @@ X emits 'playing' and 'stopped' events
 - take cuelist with cueContent field, loop / loop start / loop end fields
 */
 
+import * as Tone from 'tone'
+
 var WebAudioSession = {
   players: new Map(), // sample buffers to hold each track
   fader: null, // crossfader
@@ -44,16 +46,16 @@ var WebAudioSession = {
       if(this.players.size == 2){ // make sure there's only two samples / tracks
         console.log(0)
         try {
-          this.fader = new Tone.CrossFade()
+          this.fader = new Tone.CrossFade().toDestination()
         } catch(error){
-          console.log("fuuuu")
+          console.log("derp, something went wrong making the fader")
+          return
         }
-        console.log(1)
         // connect the two inputs
-        // const ambient = this.players.get("0").connect(this.fader.a).start()
-        // const cue = this.players.get("1").connect(this.fader.b).start()
-        // this.fader.fade.value = 0.5
-        // this.trigger('playing')
+        const ambient = this.players.get("0").connect(this.fader.a).start()
+        const cue = this.players.get("1").connect(this.fader.b).start()
+        this.fader.fade.value = 0.5
+        this.trigger('playing')
       } else {
         console.log("Error -- this patch setup needs exactly two files passed in")
       }
