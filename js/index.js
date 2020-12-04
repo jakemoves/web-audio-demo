@@ -8,7 +8,6 @@ WebAudioSession.bind('started', () => {
 
 WebAudioSession.bind('loaded', () => {
   // fires when all files are finished loading
-  console.log(0.5)
   document.getElementById("loading_indicator").classList.add('hidden')
 })
 
