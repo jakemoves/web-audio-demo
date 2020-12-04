@@ -36,7 +36,7 @@ hr {
 }
 input[type=range] {
     width: 100%;
-    margin: 7.7px 0;
+    margin: 8px 0;
     background-color: transparent;
     -webkit-appearance: none;
   }
@@ -48,11 +48,11 @@ input[type=range] {
     border: 1.5px solid rgba(1, 1, 1, 0);
     border-radius: 1.3px;
     width: 100%;
-    height: 1.6px;
+    height: 1px;
     cursor: pointer;
   }
   input[type=range]::-webkit-slider-thumb {
-    margin-top: -9.2px;
+    margin-top: -9.5px;
     width: 17px;
     height: 17px;
     background: #ffffff;
@@ -69,7 +69,7 @@ input[type=range] {
     border: 1.5px solid rgba(1, 1, 1, 0);
     border-radius: 1.3px;
     width: 100%;
-    height: 1.6px;
+    height: 1px;
     cursor: pointer;
   }
   input[type=range]::-moz-range-thumb {
@@ -83,14 +83,14 @@ input[type=range] {
   input[type=range]::-ms-track {
     background: transparent;
     border-color: transparent;
-    border-width: 8.7px 0;
+    border-width: 9px 0;
     color: transparent;
     width: 100%;
-    height: 1.6px;
+    height: 1px;
     cursor: pointer;
   }
   input[type=range]::-ms-fill-lower {
-    background: #ffff04;
+    background: #ffffb2;
     border: 1.5px solid rgba(1, 1, 1, 0);
     border-radius: 2.6px;
   }
