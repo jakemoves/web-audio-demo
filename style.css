@@ -50,6 +50,7 @@ input[type=range] {
     width: 100%;
     height: 0.2px;
     cursor: pointer;
+    margin-top: 20px
   }
   input[type=range]::-webkit-slider-thumb {
     margin-top: -9.9px;
@@ -71,6 +72,7 @@ input[type=range] {
     width: 100%;
     height: 0.2px;
     cursor: pointer;
+    margin-top: 20px
   }
   input[type=range]::-moz-range-thumb {
     width: 17px;
