@@ -34,7 +34,6 @@ hr {
 .hidden {
   visibility: hidden;
 }
-
 input[type=range] {
     width: 100%;
     margin: 7.7px 0;
@@ -46,7 +45,7 @@ input[type=range] {
   }
   input[type=range]::-webkit-slider-runnable-track {
     background: #fffffe;
-    border: 1.5px solid #010101;
+    border: 1.5px solid rgba(1, 1, 1, 0);
     border-radius: 1.3px;
     width: 100%;
     height: 1.6px;
@@ -67,7 +66,7 @@ input[type=range] {
   }
   input[type=range]::-moz-range-track {
     background: #fffffe;
-    border: 1.5px solid #010101;
+    border: 1.5px solid rgba(1, 1, 1, 0);
     border-radius: 1.3px;
     width: 100%;
     height: 1.6px;
@@ -91,13 +90,13 @@ input[type=range] {
     cursor: pointer;
   }
   input[type=range]::-ms-fill-lower {
-    background: #ffffda;
-    border: 1.5px solid #010101;
+    background: #ffff04;
+    border: 1.5px solid rgba(1, 1, 1, 0);
     border-radius: 2.6px;
   }
   input[type=range]::-ms-fill-upper {
     background: #fffffe;
-    border: 1.5px solid #010101;
+    border: 1.5px solid rgba(1, 1, 1, 0);
     border-radius: 2.6px;
   }
   input[type=range]::-ms-thumb {
