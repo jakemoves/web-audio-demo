@@ -42,12 +42,18 @@ var WebAudioSession = {
       console.log('loading complete')
       // setting up crossfade
       if(this.players.size == 2){ // make sure there's only two samples / tracks
-        this.fader = new Tone.CrossFade().toDestination()
+        console.log(0)
+        try {
+          this.fader = new Tone.CrossFade()
+        } catch(error){
+          console.log("fuuuu")
+        }
+        console.log(1)
         // connect the two inputs
-        const ambient = this.players.get("0").connect(this.fader.a).start()
-        const cue = this.players.get("1").connect(this.fader.b).start()
-        this.fader.fade.value = 0.5
-        this.trigger('playing')
+        // const ambient = this.players.get("0").connect(this.fader.a).start()
+        // const cue = this.players.get("1").connect(this.fader.b).start()
+        // this.fader.fade.value = 0.5
+        // this.trigger('playing')
       } else {
         console.log("Error -- this patch setup needs exactly two files passed in")
       }
