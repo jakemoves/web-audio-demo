@@ -14,6 +14,8 @@ X emits 'playing' and 'stopped' events
 - take cuelist with cueContent field, loop / loop start / loop end fields
 */
 
+import * as Tone from 'tone'
+
 var WebAudioSession = {
   players: new Map(), // sample buffers to hold each track
   fader: null, // crossfader
@@ -29,7 +31,12 @@ var WebAudioSession = {
     console.log('audio session started')
 
     audioAssets.forEach( (audioAsset, index) => {
-      this.players.set("" + index, new Tone.Player(audioAsset))
+      let player = new Tone.Player(audioAsset)
+      if(index == 0){
+        // it's the ambient file (first in asset list), loop that bad boy
+        player.loop = true
+      }
+      this.players.set("" + index, player)
     })
 
     Tone.loaded().then(() => {
@@ -37,7 +44,13 @@ var WebAudioSession = {
       console.log('loading complete')
       // setting up crossfade
       if(this.players.size == 2){ // make sure there's only two samples / tracks
-        this.fader = new Tone.CrossFade().toDestination()
+        console.log(0)
+        try {
+          this.fader = new Tone.CrossFade().toDestination()
+        } catch(error){
+          console.log("derp, something went wrong making the fader")
+          return
+        }
         // connect the two inputs
         const ambient = this.players.get("0").connect(this.fader.a).start()
         const cue = this.players.get("1").connect(this.fader.b).start()
