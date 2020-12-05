@@ -48,21 +48,21 @@ let episodes = [
     ]
   },{
     episodeNumber: 2,
-    episodeLabel: "Voyage",
+    episodeLabel: "Part 2: The Voyage",
     audioAssets:[
       "./sounds/HC-Winter-Amb-1Test-short.mp3",
       "./sounds/Wonderland_Window-Place.mp3"
     ]
   },{
     episodeNumber: 3,
-    episodeLabel: "Place",
+    episodeLabel: "Part 3: The Meeting Place",
     audioAssets:[
       "./sounds/HC-Winter-Amb-1Test-short.mp3",
       "./sounds/Wonderland-Scene3-2.5MThePlace.mp3"
     ]
   },{
     episodeNumber: 4,
-    episodeLabel: "Spring",
+    episodeLabel: "Part 4: Spring",
     audioAssets:[
       "./sounds/HC-Winter-Amb-1Test-short.mp3",
       "./sounds/Wonderland-Scene4-2M-Spring.mp3"
