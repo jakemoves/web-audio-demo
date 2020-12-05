@@ -41,7 +41,7 @@ console.log("Episode: " + activeEpisode)
 let episodes = [
   {
     episodeNumber: 1,
-    episodeLabel: "Winter",
+    episodeLabel: "Part 1: Winter",
     audioAssets:[
       "./sounds/HC-Winter-Amb-1Test-short.mp3",
       "./sounds/Wonderland-Scene1-2.0M-Winter.mp3"
